@@ -22,6 +22,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm'
 
       - name: Set env for build (Prisma needs DATABASE_URL to parse schema)
         run: echo "DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy" >> $GITHUB_ENV
@@ -35,11 +36,16 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Prepare standalone for Azure
+        run: |
+          cp -r public .next/standalone/
+          cp -r .next/static .next/standalone/.next/static
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: .next/standalone
 
   deploy:
     runs-on: ubuntu-latest
@@ -68,3 +74,8 @@ jobs:
           app-name: 'tireops-app'
           slot-name: 'Production'
           package: .
+
+      - name: Set Azure startup command
+        run: |
+          az webapp config set --name tireops-app --resource-group tireops-rg --startup-file "node server.js"
+          az webapp config appsettings set --name tireops-app --resource-group tireops-rg --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false --output none
