@@ -67,6 +67,11 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1E1581CD236B45359737542380FA5C3F }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_166257B5608D4A52A91D0B4ABFCC3771 }}
 
+      - name: Configure Azure (disable Oryx build, set startup command)
+        run: |
+          az webapp config set --name tireops-app --resource-group tireops-rg --startup-file "node server.js"
+          az webapp config appsettings set --name tireops-app --resource-group tireops-rg --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false --output none
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -74,8 +79,3 @@ jobs:
           app-name: 'tireops-app'
           slot-name: 'Production'
           package: .
-
-      - name: Set Azure startup command
-        run: |
-          az webapp config set --name tireops-app --resource-group tireops-rg --startup-file "node server.js"
-          az webapp config appsettings set --name tireops-app --resource-group tireops-rg --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false --output none
