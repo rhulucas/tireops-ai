@@ -1,8 +1,8 @@
-// 简单内存限流 - 企业环境可替换为 Redis
+// In-memory rate limit - replace with Redis for production
 const store = new Map<string, { count: number; resetAt: number }>();
 
-const WINDOW_MS = 60 * 1000; // 1 分钟
-const MAX_REQUESTS = 60; // 每分钟最多 60 次
+const WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS = 60; // max 60 requests per minute
 
 export function rateLimit(identifier: string): { success: boolean; remaining: number } {
   const now = Date.now();

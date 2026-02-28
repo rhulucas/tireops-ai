@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
 const scenarios = [
-  { value: "oem", label: "OEM 认证咨询" },
-  { value: "fleet", label: "车队询价" },
-  { value: "warranty", label: "质保投诉" },
+  { value: "oem", label: "OEM certification" },
+  { value: "fleet", label: "Fleet inquiry" },
+  { value: "warranty", label: "Warranty complaint" },
 ];
 
 export default function EmailAIPage() {
@@ -25,9 +25,9 @@ export default function EmailAIPage() {
         body: JSON.stringify({ scenario, content }),
       });
       const data = await res.json();
-      setResult(data.result || data.error || "生成失败");
+      setResult(data.result || data.error || "Failed");
     } catch {
-      setResult("API 调用失败。请配置 OPENAI_API_KEY。");
+      setResult("API failed. Configure OPENAI_API_KEY.");
     } finally {
       setLoading(false);
     }
@@ -37,12 +37,12 @@ export default function EmailAIPage() {
     <div className="min-h-screen p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-100">Email AI</h1>
-        <p className="mt-1 text-zinc-400">轮胎行业邮件场景：OEM 认证、车队询价、质保投诉</p>
+        <p className="mt-1 text-zinc-400">Tire email scenarios: OEM cert, fleet inquiry, warranty</p>
       </div>
 
       <div className="max-w-2xl space-y-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
         <div>
-          <label className="mb-2 block text-sm font-medium text-zinc-300">场景</label>
+          <label className="mb-2 block text-sm font-medium text-zinc-300">Scenario</label>
           <select
             value={scenario}
             onChange={(e) => setScenario(e.target.value)}
@@ -56,13 +56,13 @@ export default function EmailAIPage() {
           </select>
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-zinc-300">邮件内容/要点</label>
+          <label className="mb-2 block text-sm font-medium text-zinc-300">Email content / points</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={4}
             className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2 text-zinc-100 placeholder-zinc-500 focus:border-amber-500 focus:outline-none"
-            placeholder="输入客户邮件内容或回复要点..."
+            placeholder="Enter customer email or reply points..."
           />
         </div>
         <button
@@ -73,15 +73,15 @@ export default function EmailAIPage() {
           {loading ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              AI 生成回复...
+              Generating reply...
             </>
           ) : (
-            "AI 生成回复"
+            "AI Generate Reply"
           )}
         </button>
         {result && (
           <div className="rounded-lg border border-zinc-700 bg-zinc-800/50 p-4">
-            <p className="text-sm font-medium text-zinc-400">回复草稿</p>
+            <p className="text-sm font-medium text-zinc-400">Reply draft</p>
             <pre className="mt-2 whitespace-pre-wrap text-sm text-zinc-200">{result}</pre>
           </div>
         )}

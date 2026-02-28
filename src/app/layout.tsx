@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TireOps AI - 轮胎行业智能平台",
-  description: "生产监控、AI报价、订单管理、智能邮件与发票、胎面设计、配方生成",
+  title: "TireOps AI - Tire Industry Smart Platform",
+  description: "Production monitoring, AI quoting, order management, email/invoice AI, tread design, compound spec",
 };
 
 export default function RootLayout({

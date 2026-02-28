@@ -20,9 +20,9 @@ export default function AIQuotingPage() {
         body: JSON.stringify({ size, loadIndex, speedRating }),
       });
       const data = await res.json();
-      setResult(data.result || data.error || "生成失败");
+      setResult(data.result || data.error || "Failed");
     } catch {
-      setResult("API 调用失败。请确保已配置 OPENAI_API_KEY。");
+      setResult("API failed. Ensure OPENAI_API_KEY is configured.");
     } finally {
       setLoading(false);
     }
@@ -33,14 +33,14 @@ export default function AIQuotingPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-100">AI Quoting</h1>
         <p className="mt-1 text-zinc-400">
-          轮胎规格报价：尺寸、载重指数、速度级别、EU 标签、DOT/ECE 合规
+          Tire spec quote: size, load index, speed rating, EU label, DOT/ECE
         </p>
       </div>
 
       <div className="max-w-2xl space-y-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
         <div>
           <label className="mb-2 block text-sm font-medium text-zinc-300">
-            轮胎尺寸 (如 225/65R17)
+            Tire size (e.g. 225/65R17)
           </label>
           <input
             type="text"
@@ -51,7 +51,7 @@ export default function AIQuotingPage() {
           />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-zinc-300">载重指数</label>
+          <label className="mb-2 block text-sm font-medium text-zinc-300">Load index</label>
           <input
             type="number"
             value={loadIndex}
@@ -60,7 +60,7 @@ export default function AIQuotingPage() {
           />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-zinc-300">速度级别</label>
+          <label className="mb-2 block text-sm font-medium text-zinc-300">Speed rating</label>
           <select
             value={speedRating}
             onChange={(e) => setSpeedRating(e.target.value)}
@@ -81,15 +81,15 @@ export default function AIQuotingPage() {
           {loading ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              AI 生成报价...
+              Generating quote...
             </>
           ) : (
-            "AI 生成报价"
+            "AI Generate Quote"
           )}
         </button>
         {result && (
           <div className="rounded-lg border border-zinc-700 bg-zinc-800/50 p-4">
-            <p className="text-sm font-medium text-zinc-400">报价结果</p>
+            <p className="text-sm font-medium text-zinc-400">Quote result</p>
             <pre className="mt-2 whitespace-pre-wrap text-sm text-zinc-200">{result}</pre>
           </div>
         )}

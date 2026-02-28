@@ -1,5 +1,5 @@
-// TireOps - 企业级配置
-// 生产环境使用 PostgreSQL，通过 DATABASE_URL 连接
+// TireOps - Enterprise config
+// Production uses PostgreSQL via DATABASE_URL
 
 generator client {
   provider = "prisma-client"
@@ -11,7 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ============ NextAuth.js 模型 ============
+// ============ NextAuth.js models ============
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -62,7 +62,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-// ============ 业务模型 ============
+// ============ Business models ============
 model Order {
   id            String   @id @default(cuid())
   orderNumber   String   @map("order_number")

@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Loader2, Sparkles } from "lucide-react";
 
 const polymers = ["SBR", "NR", "BR", "IR"];
-const fillers = ["炭黑 N330", "炭黑 N550", "白炭黑", "碳酸钙"];
-const vulcanization = ["硫磺", "过氧化物", "树脂"];
+const fillers = ["Carbon black N330", "Carbon black N550", "Silica", "Calcium carbonate"];
+  const vulcanization = ["Sulfur", "Peroxide", "Resin"];
 
 export default function CompoundSpecPage() {
   const [selectedPolymer, setSelectedPolymer] = useState<string[]>([]);
@@ -40,9 +40,9 @@ export default function CompoundSpecPage() {
         }),
       });
       const data = await res.json();
-      setResult(data.result || data.error || "生成失败");
+      setResult(data.result || data.error || "Failed");
     } catch {
-      setResult("API 调用失败。请配置 OPENAI_API_KEY。");
+      setResult("API failed. Configure OPENAI_API_KEY.");
     } finally {
       setLoading(false);
     }
@@ -53,18 +53,18 @@ export default function CompoundSpecPage() {
       <div className="mb-8 flex items-center gap-2">
         <h1 className="text-2xl font-bold text-zinc-100">Compound Spec</h1>
         <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-xs font-medium text-amber-400">
-          新增!
+          NEW!
         </span>
       </div>
       <p className="mb-8 text-zinc-400">
-        橡胶配方生成器：选择聚合物、填料、硫化体系 → AI 输出 phr 配方 → 预测 EU 标签等级
+        Rubber compound generator: select polymers, fillers, vulcanization → AI outputs phr → predicts EU label
       </p>
 
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
           <div>
             <label className="mb-2 block text-sm font-medium text-zinc-300">
-              聚合物 (SBR/NR/BR/IR)
+              Polymers (SBR/NR/BR/IR)
             </label>
             <div className="flex flex-wrap gap-2">
               {polymers.map((p) => (
@@ -83,7 +83,7 @@ export default function CompoundSpecPage() {
             </div>
           </div>
           <div>
-            <label className="mb-2 block text-sm font-medium text-zinc-300">填料</label>
+            <label className="mb-2 block text-sm font-medium text-zinc-300">Fillers</label>
             <div className="flex flex-wrap gap-2">
               {fillers.map((f) => (
                 <button
@@ -101,7 +101,7 @@ export default function CompoundSpecPage() {
             </div>
           </div>
           <div>
-            <label className="mb-2 block text-sm font-medium text-zinc-300">硫化体系</label>
+            <label className="mb-2 block text-sm font-medium text-zinc-300">Vulcanization</label>
             <div className="flex flex-wrap gap-2">
               {vulcanization.map((v) => (
                 <button
@@ -126,22 +126,22 @@ export default function CompoundSpecPage() {
             {loading ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                AI 生成配方...
+                Generating formula...
               </>
             ) : (
               <>
                 <Sparkles className="h-4 w-4" />
-                AI 生成 phr 配方
+                AI Generate phr Formula
               </>
             )}
           </button>
         </div>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-          <p className="mb-2 text-sm font-medium text-zinc-400">输出： phr 配方 + EU 标签预测</p>
+          <p className="mb-2 text-sm font-medium text-zinc-400">Output: phr formula + EU label prediction</p>
           {result ? (
             <pre className="whitespace-pre-wrap text-sm text-zinc-200">{result}</pre>
           ) : (
-            <p className="text-zinc-500">选择组分后点击「AI 生成 phr 配方」</p>
+            <p className="text-zinc-500">Select components and click "AI Generate phr Formula"</p>
           )}
         </div>
       </div>

@@ -7,10 +7,10 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "" });
 async function treadHandler(req: NextRequest) {
   try {
     const { elements } = await req.json();
-    const desc = Array.isArray(elements) ? elements.join("、") : "胎面设计元素";
+    const desc = Array.isArray(elements) ? elements.join(", ") : "tread design elements";
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({
-        result: `【模拟分析】设计元素: ${desc}\n湿地抓地: B | 噪音: 72dB | 滚动阻力: C\n导出 Mold CNC 规格请使用导出按钮。`,
+        result: `[Mock Analysis] Elements: ${desc}\nWet grip: B | Noise: 72dB | Rolling resistance: C\nUse Export button for Mold CNC specs.`,
       });
     }
     const completion = await openai.chat.completions.create({
@@ -18,21 +18,21 @@ async function treadHandler(req: NextRequest) {
       messages: [
         {
           role: "system",
-          content: `你是轮胎胎面设计专家。根据用户描述的设计元素（排水槽、胎块、刀槽、凹纹等），分析并预测：
-1. 湿地抓地等级（EU 标签 A-E）
-2. 滚动噪音（dB）
-3. 滚动阻力等级
-4. Mold CNC 规格建议（简要）`,
+          content: `You are a tire tread design expert. Based on the design elements (grooves, blocks, sipes, dimples), analyze and predict:
+1. Wet grip grade (EU label A-E)
+2. Rolling noise (dB)
+3. Rolling resistance grade
+4. Mold CNC spec recommendations (brief)`,
         },
-        { role: "user", content: `设计元素：${desc}。请进行 AI 分析。` },
+        { role: "user", content: `Design elements: ${desc}. Perform AI analysis.` },
       ],
     });
-    const result = completion.choices[0]?.message?.content || "无输出";
+    const result = completion.choices[0]?.message?.content || "No output";
     return NextResponse.json({ result });
   } catch (e) {
     console.error(e);
     return NextResponse.json(
-      { error: String(e), result: "AI 调用失败" },
+      { error: String(e), result: "AI call failed" },
       { status: 500 }
     );
   }

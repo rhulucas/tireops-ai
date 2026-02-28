@@ -24,14 +24,14 @@ function LoginForm() {
         redirect: false,
       });
       if (res?.error) {
-        setError("邮箱或密码错误");
+        setError("Invalid email or password");
         setLoading(false);
         return;
       }
       router.push(callbackUrl);
       router.refresh();
     } catch {
-      setError("登录失败");
+      setError("Login failed");
     } finally {
       setLoading(false);
     }
@@ -46,11 +46,11 @@ function LoginForm() {
           </div>
           <span className="text-lg font-semibold text-zinc-100">TireOps AI</span>
         </div>
-        <h1 className="mb-6 text-xl font-semibold text-zinc-200">登录</h1>
+        <h1 className="mb-6 text-xl font-semibold text-zinc-200">Sign In</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="mb-2 block text-sm font-medium text-zinc-400">
-              邮箱
+              Email
             </label>
             <input
               type="email"
@@ -63,7 +63,7 @@ function LoginForm() {
           </div>
           <div>
             <label className="mb-2 block text-sm font-medium text-zinc-400">
-              密码
+              Password
             </label>
             <input
               type="password"
@@ -81,7 +81,7 @@ function LoginForm() {
             disabled={loading}
             className="w-full rounded-lg bg-amber-500 py-2.5 font-medium text-zinc-900 hover:bg-amber-400 disabled:opacity-50"
           >
-            {loading ? "登录中..." : "登录"}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
       </div>
@@ -91,7 +91,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-400">加载中...</div>}>
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-400">Loading...</div>}>
       <LoginForm />
     </Suspense>
   );

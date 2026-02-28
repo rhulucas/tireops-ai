@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 type OrderStatus = "PENDING" | "PRODUCTION" | "QC_CHECK" | "SHIPPED";
 
 const statusLabels: Record<OrderStatus, string> = {
-  PENDING: "待生产",
-  PRODUCTION: "生产中",
-  QC_CHECK: "质检中",
-  SHIPPED: "已发货",
+  PENDING: "Pending",
+  PRODUCTION: "In production",
+  QC_CHECK: "QC check",
+  SHIPPED: "Shipped",
 };
 
 // Client component - we fetch via API
@@ -27,25 +27,25 @@ export default function OrdersPage() {
     <div className="min-h-screen p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-100">Orders</h1>
-        <p className="mt-1 text-zinc-400">订单状态：PRODUCTION / QC CHECK 等阶段</p>
+        <p className="mt-1 text-zinc-400">Order status: PRODUCTION / QC CHECK stages</p>
       </div>
 
       <div className="overflow-hidden rounded-xl border border-zinc-800">
         <table className="w-full text-left">
           <thead className="bg-zinc-900">
             <tr>
-              <th className="px-6 py-4 text-sm font-medium text-zinc-400">订单号</th>
-              <th className="px-6 py-4 text-sm font-medium text-zinc-400">客户</th>
-              <th className="px-6 py-4 text-sm font-medium text-zinc-400">规格</th>
-              <th className="px-6 py-4 text-sm font-medium text-zinc-400">数量</th>
-              <th className="px-6 py-4 text-sm font-medium text-zinc-400">状态</th>
+              <th className="px-6 py-4 text-sm font-medium text-zinc-400">Order #</th>
+              <th className="px-6 py-4 text-sm font-medium text-zinc-400">Customer</th>
+              <th className="px-6 py-4 text-sm font-medium text-zinc-400">Spec</th>
+              <th className="px-6 py-4 text-sm font-medium text-zinc-400">Qty</th>
+              <th className="px-6 py-4 text-sm font-medium text-zinc-400">Status</th>
             </tr>
           </thead>
           <tbody>
             {orders.length === 0 ? (
               <tr>
                 <td colSpan={5} className="px-6 py-12 text-center text-zinc-500">
-                  暂无订单。运行 seed 或创建订单。
+                  No orders. Run seed or create orders.
                 </td>
               </tr>
             ) : (

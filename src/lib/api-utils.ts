@@ -10,7 +10,7 @@ export function withRateLimit(
     const { success } = rateLimit(id);
     if (!success) {
       return NextResponse.json(
-        { error: "请求过于频繁，请稍后再试" },
+        { error: "Too many requests, please try again later" },
         { status: 429 }
       );
     }

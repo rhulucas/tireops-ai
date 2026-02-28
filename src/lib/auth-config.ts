@@ -1,4 +1,4 @@
-// 供 middleware 使用的精简配置 - 不导入 Prisma
+// Edge-safe config for middleware - no Prisma import
 
 import type { NextAuthConfig } from "next-auth";
 

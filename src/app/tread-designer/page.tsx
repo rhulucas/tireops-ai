@@ -75,13 +75,13 @@ export default function TreadDesignerPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          elements: ["排水槽", "胎块", "刀槽", "凹纹"],
+          elements: ["grooves", "blocks", "sipes", "dimples"],
         }),
       });
       const data = await res.json();
-      setAnalysis(data.result || data.error || "分析失败");
+      setAnalysis(data.result || data.error || "Analysis failed");
     } catch {
-      setAnalysis("API 调用失败。请配置 OPENAI_API_KEY。");
+      setAnalysis("API failed. Configure OPENAI_API_KEY.");
     } finally {
       setLoading(false);
     }
@@ -102,21 +102,21 @@ export default function TreadDesignerPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-100">Tread Designer</h1>
         <p className="mt-1 text-zinc-400">
-          胎面设计画布：排水槽 / 胎块 / 刀槽 / 凹纹 → AI 分析 → 导出 Mold CNC 规格
+          Tread canvas: grooves / blocks / sipes / dimples → AI analysis → Export Mold CNC
         </p>
       </div>
 
       <div className="flex gap-6">
         <div className="flex flex-col gap-4">
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-            <p className="mb-2 text-sm font-medium text-zinc-400">绘图工具</p>
+            <p className="mb-2 text-sm font-medium text-zinc-400">Tools</p>
             <div className="flex flex-wrap gap-2">
               {[
-                { key: "groove", label: "排水槽", color: "#1e3a5f" },
-                { key: "block", label: "胎块", color: "#374151" },
-                { key: "sipe", label: "刀槽", color: "#4b5563" },
-                { key: "dimple", label: "凹纹", color: "#6b7280" },
-                { key: "erase", label: "橡皮", color: "#0a0a0a" },
+                { key: "groove", label: "Grooves", color: "#1e3a5f" },
+                { key: "block", label: "Blocks", color: "#374151" },
+                { key: "sipe", label: "Sipes", color: "#4b5563" },
+                { key: "dimple", label: "Dimples", color: "#6b7280" },
+                { key: "erase", label: "Eraser", color: "#0a0a0a" },
               ].map(({ key, label, color }) => (
                 <button
                   key={key}
@@ -139,7 +139,7 @@ export default function TreadDesignerPage() {
               className="flex items-center gap-2 rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800"
             >
               <Eraser className="h-4 w-4" />
-              清空
+              Clear
             </button>
             <button
               onClick={runAnalysis}
@@ -147,19 +147,19 @@ export default function TreadDesignerPage() {
               className="flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400 disabled:opacity-50"
             >
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-              AI 分析
+              AI Analyze
             </button>
             <button
               onClick={exportCNC}
               className="flex items-center gap-2 rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800"
             >
               <Download className="h-4 w-4" />
-              导出 CNC
+              Export CNC
             </button>
           </div>
           {analysis && (
             <div className="rounded-lg border border-zinc-700 bg-zinc-800/50 p-4">
-              <p className="text-sm font-medium text-zinc-400">AI 分析结果</p>
+              <p className="text-sm font-medium text-zinc-400">AI analysis result</p>
               <pre className="mt-2 whitespace-pre-wrap text-sm text-zinc-200">{analysis}</pre>
             </div>
           )}

@@ -63,7 +63,7 @@ export function Sidebar() {
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200"
         >
           <LogOut className="h-4 w-4" />
-          退出登录
+          Sign Out
         </button>
       </div>
     </aside>

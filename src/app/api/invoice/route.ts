@@ -9,7 +9,7 @@ async function invoiceHandler(req: NextRequest) {
     const { warrantyMiles, certFee, items } = await req.json();
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({
-        result: `【模拟发票】\n项目: ${items}\n胎纹质保: ${warrantyMiles} mi\n认证文件费: $${certFee}\n---\n请配置 OPENAI_API_KEY 使用 AI 生成完整条款。`,
+        result: `[Mock Invoice]\nItems: ${items}\nTread warranty: ${warrantyMiles} mi\nCert fee: $${certFee}\n---\nConfigure OPENAI_API_KEY for full AI.`,
       });
     }
     const completion = await openai.chat.completions.create({
@@ -17,24 +17,24 @@ async function invoiceHandler(req: NextRequest) {
       messages: [
         {
           role: "system",
-          content: `你是轮胎行业财务专家。根据用户输入生成规范的发票内容，包括：
-- 项目明细
-- 胎纹质保条款（如 xxx mi guarantee）
-- 认证文件费说明
-- 付款条款`,
+          content: `You are a tire industry finance expert. Generate invoice content including:
+- Line items
+- Tread warranty terms (e.g. xxx mi guarantee)
+- Certification document fee
+- Payment terms`,
         },
         {
           role: "user",
-          content: `质保 ${warrantyMiles} mi，认证费 $${certFee}，项目：${items}。`,
+          content: `Warranty ${warrantyMiles} mi, cert fee $${certFee}, items: ${items}.`,
         },
       ],
     });
-    const result = completion.choices[0]?.message?.content || "无输出";
+    const result = completion.choices[0]?.message?.content || "No output";
     return NextResponse.json({ result });
   } catch (e) {
     console.error(e);
     return NextResponse.json(
-      { error: String(e), result: "AI 调用失败" },
+      { error: String(e), result: "AI call failed" },
       { status: 500 }
     );
   }

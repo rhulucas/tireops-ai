@@ -7,12 +7,12 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "" });
 async function compoundHandler(req: NextRequest) {
   try {
     const { polymers, fillers, vulcanization } = await req.json();
-    const p = Array.isArray(polymers) ? polymers.join("、") : "未选";
-    const f = Array.isArray(fillers) ? fillers.join("、") : "未选";
-    const v = Array.isArray(vulcanization) ? vulcanization.join("、") : "未选";
+    const p = Array.isArray(polymers) ? polymers.join(", ") : "none";
+    const f = Array.isArray(fillers) ? fillers.join(", ") : "none";
+    const v = Array.isArray(vulcanization) ? vulcanization.join(", ") : "none";
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({
-        result: `【模拟配方】\n聚合物: ${p}\n填料: ${f}\n硫化: ${v}\n\nphr 配方示例:\n- 生胶 100\n- 炭黑 50\n- 硫磺 2\n- 促进剂 1.5\n\nEU 标签预测: 湿地 B | 阻力 C | 噪音 72dB\n请配置 OPENAI_API_KEY 使用完整 AI。`,
+        result: `[Mock Formula]\nPolymers: ${p}\nFillers: ${f}\nVulcanization: ${v}\n\nSample phr:\n- Rubber 100\n- Carbon black 50\n- Sulfur 2\n- Accelerator 1.5\n\nEU prediction: Wet B | Resistance C | Noise 72dB\nConfigure OPENAI_API_KEY for full AI.`,
       });
     }
     const completion = await openai.chat.completions.create({
@@ -20,20 +20,20 @@ async function compoundHandler(req: NextRequest) {
       messages: [
         {
           role: "system",
-          content: `你是橡胶配方专家。根据用户选择的聚合物（SBR/NR/BR/IR）、填料、硫化体系，输出完整的 phr 配方（每 100 份生胶的用量），并预测 EU 标签等级（湿地抓地、滚动阻力、噪音）。格式清晰，使用中文。`,
+          content: `You are a rubber compound expert. Based on selected polymers (SBR/NR/BR/IR), fillers, and vulcanization system, output a complete phr formula (per 100 parts rubber) and predict EU label grades (wet grip, rolling resistance, noise). Use clear formatting.`,
         },
         {
           role: "user",
-          content: `聚合物：${p}；填料：${f}；硫化：${v}。请生成 phr 配方并预测 EU 标签。`,
+          content: `Polymers: ${p}; Fillers: ${f}; Vulcanization: ${v}. Generate phr formula and predict EU label.`,
         },
       ],
     });
-    const result = completion.choices[0]?.message?.content || "无输出";
+    const result = completion.choices[0]?.message?.content || "No output";
     return NextResponse.json({ result });
   } catch (e) {
     console.error(e);
     return NextResponse.json(
-      { error: String(e), result: "AI 调用失败" },
+      { error: String(e), result: "AI call failed" },
       { status: 500 }
     );
   }

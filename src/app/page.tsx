@@ -45,28 +45,28 @@ export default function DashboardPage() {
     <div className="min-h-screen p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-100">Dashboard</h1>
-        <p className="mt-1 text-zinc-400">实时生产线状态与胎纹效率</p>
+        <p className="mt-1 text-zinc-400">Real-time production line status & tread efficiency</p>
       </div>
 
       <div className="mb-8 grid gap-4 md:grid-cols-3">
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
           <div className="flex items-center gap-2 text-zinc-400">
             <Activity className="h-4 w-4" />
-            <span className="text-sm">平均胎纹效率</span>
+            <span className="text-sm">Avg tread efficiency</span>
           </div>
           <p className="mt-2 text-3xl font-bold text-amber-400">{avgEfficiency.toFixed(1)}%</p>
         </div>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
           <div className="flex items-center gap-2 text-zinc-400">
             <AlertTriangle className="h-4 w-4" />
-            <span className="text-sm">QC 不合格数</span>
+            <span className="text-sm">QC failures</span>
           </div>
           <p className="mt-2 text-3xl font-bold text-red-400">{totalQcFails}</p>
         </div>
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
           <div className="flex items-center gap-2 text-zinc-400">
             <TrendingUp className="h-4 w-4" />
-            <span className="text-sm">运行产线</span>
+            <span className="text-sm">Active lines</span>
           </div>
           <p className="mt-2 text-3xl font-bold text-emerald-400">
             {lines.filter((l) => l.status === "RUNNING").length}/4
@@ -75,7 +75,7 @@ export default function DashboardPage() {
       </div>
 
       <div>
-        <h2 className="mb-4 text-lg font-semibold text-zinc-200">生产线状态</h2>
+        <h2 className="mb-4 text-lg font-semibold text-zinc-200">Production lines</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {lines.map((line) => (
             <div
@@ -94,15 +94,15 @@ export default function DashboardPage() {
                   }`}
                 >
                   {line.status === "RUNNING"
-                    ? "运行中"
-                    : line.status === "MAINTENANCE"
-                    ? "维保"
-                    : "停止"}
+? "Running"
+                      : line.status === "MAINTENANCE"
+                      ? "Maintenance"
+                      : "Stopped"}
                 </span>
               </div>
               <div className="mt-4 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-zinc-400">效率</span>
+                  <span className="text-zinc-400">Efficiency</span>
                   <span className="text-amber-400">{line.efficiency.toFixed(1)}%</span>
                 </div>
                 <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
@@ -112,7 +112,7 @@ export default function DashboardPage() {
                   />
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-zinc-400">QC 不合格</span>
+                  <span className="text-zinc-400">QC fails</span>
                   <span className="text-red-400">{line.qcFails}</span>
                 </div>
               </div>

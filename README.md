@@ -1,93 +1,93 @@
 # TireOps AI
 
-轮胎行业全栈智能平台，**企业级** 7 个专属模块。
+Tire industry full-stack smart platform with **enterprise-grade** 7 modules.
 
-## 企业级特性
+## Enterprise Features
 
-| 特性 | 说明 |
-|------|------|
-| **PostgreSQL** | 生产级数据库，支持 Azure / 自建 |
-| **身份认证** | NextAuth.js 登录、JWT 会话 |
-| **角色权限** | ADMIN / USER 角色（可扩展） |
-| **API 限流** | 60 次/分钟/IP，防滥用 |
-| **Azure 就绪** | 完整部署文档，支持全球访问 |
+| Feature | Description |
+|---------|-------------|
+| **PostgreSQL** | Production DB, Azure / self-hosted |
+| **Auth** | NextAuth.js login, JWT session |
+| **Roles** | ADMIN / USER (extensible) |
+| **API rate limit** | 60 req/min/IP |
+| **Azure ready** | Deployment docs, global access |
 
-## 功能模块
+## Modules
 
-| 模块 | 功能 |
-|------|------|
-| **Dashboard** | 生产线状态、QC、胎纹效率 |
-| **AI Quoting** | 轮胎报价、EU 标签、DOT/ECE |
-| **Orders** | 订单 PRODUCTION / QC CHECK |
-| **Email AI** | OEM / 车队 / 质保邮件场景 |
-| **Invoice AI** | 发票、质保、认证费 |
-| **Tread Designer** | 胎面设计 → AI 分析 → CNC 导出 |
-| **Compound Spec** | phr 配方生成、EU 预测 |
+| Module | Function |
+|--------|----------|
+| **Dashboard** | Production lines, QC, tread efficiency |
+| **AI Quoting** | Tire quote, EU label, DOT/ECE |
+| **Orders** | Order status: PRODUCTION / QC CHECK |
+| **Email AI** | OEM / fleet / warranty scenarios |
+| **Invoice AI** | Invoice, warranty, cert fee |
+| **Tread Designer** | Tread design → AI analysis → CNC export |
+| **Compound Spec** | phr formula, EU prediction |
 
-## 技术栈
+## Stack
 
 - **Frontend**: Next.js 16 + React 19 + TypeScript + Tailwind CSS
 - **Backend**: Next.js API Routes + Prisma ORM
-- **Database**: PostgreSQL (生产) / Docker 本地
+- **Database**: PostgreSQL (prod) / Docker (local)
 - **Auth**: NextAuth.js v5 + bcrypt
 - **AI**: OpenAI GPT-4o-mini
 
-## 环境要求
+## Requirements
 
 - **Node.js** >= 20.9.0
-- **PostgreSQL** 16+（本地可用 Docker）
+- **PostgreSQL** 16+ (Docker for local)
 
-## 快速开始
+## Quick Start
 
-### 1. 本地 PostgreSQL（Docker）
+### 1. Local PostgreSQL (Docker)
 
 ```bash
 docker-compose up -d
 ```
 
-### 2. 环境变量
+### 2. Environment
 
-复制 `.env.example` 为 `.env`：
+Copy `.env.example` to `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-编辑 `.env`，配置：
-- `DATABASE_URL`：`postgresql://tireops:tireops_dev@localhost:5432/tireops`
-- `AUTH_SECRET`：`openssl rand -base64 32` 生成
-- `OPENAI_API_KEY`：可选
+Configure:
+- `DATABASE_URL`: `postgresql://tireops:tireops_dev@localhost:5432/tireops`
+- `AUTH_SECRET`: run `openssl rand -base64 32`
+- `OPENAI_API_KEY`: optional
 
-### 3. 数据库与种子
+### 3. Database
 
 ```bash
 npx prisma migrate dev --name init
 npm run db:seed
 ```
 
-### 4. 启动
+### 4. Run
 
 ```bash
 npm run dev
 ```
 
-访问 http://localhost:3000
+Visit http://localhost:3000
 
-**默认登录**：`admin@tireops.com` / `admin123`（生产环境请立即修改）
+**Default login**: `admin@tireops.com` / `admin123` (change in production)
 
-## 个人 Demo 免费部署（推荐）
+## Free Demo Deployment (Recommended)
 
-零数据库费用：Neon 免费 PostgreSQL + Azure Web App。
+Zero DB cost: Neon free PostgreSQL + Azure Web App.
 
-**详细步骤**：[docs/FREE_DEMO_SETUP.md](docs/FREE_DEMO_SETUP.md)
+**Steps**: [docs/FREE_DEMO_SETUP.md](docs/FREE_DEMO_SETUP.md)
 
-## Azure 完整部署（含付费数据库）
+## Full Azure Deployment (with paid DB)
 
-详见 [docs/AZURE_DEPLOYMENT.md](docs/AZURE_DEPLOYMENT.md)
+See [docs/AZURE_DEPLOYMENT.md](docs/AZURE_DEPLOYMENT.md)
 
-简要步骤：
-1. 创建 Azure Database for PostgreSQL
-2. 创建 Web App（Node 20）
-3. 配置环境变量
-4. 通过 GitHub 部署
-5. 运行 `prisma migrate deploy` 与 `db:seed`
+Brief steps:
+1. Create Azure Database for PostgreSQL
+2. Create Web App (Node 20)
+3. Configure env vars
+4. Deploy via GitHub
+5. Run `prisma migrate deploy` and `db:seed`
